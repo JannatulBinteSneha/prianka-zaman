@@ -135,8 +135,8 @@ a{
   /* Mobile-specific styles */
   @media (max-width: 768px) {
     .image-container img {
-        width: 450%; /* 5 images in one file = 5 times the width */
-        height: 40%;
+        width: 350%; /* 5 images in one file = 5 times the width */
+        height: 45%;
       animation: scrollImages 60s linear infinite; /* 10s to complete one cycle */
     }
   }
