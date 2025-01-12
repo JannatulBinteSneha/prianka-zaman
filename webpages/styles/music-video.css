@@ -1,0 +1,100 @@
+
+/* Section for Music Videos */
+.music-videos-section {
+    width: 100%;
+    padding: 30px 0px 0px 0px;
+    background-color: #ffffff;
+    /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; */
+    margin: 20px auto;
+    max-width: 100%;
+}
+
+
+/* Video container styles */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Aspect ratio for 16:9 */
+    height: 0;
+    overflow: hidden;
+    /* width: 600px; */
+    background-color: #000;
+    border-radius: 8px;
+    /* height: 337.5px; */
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+.video-gallery{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.video-bundle{
+    padding: 0px 40px 0px 40px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .section-description {
+        font-size: 1rem;
+    }
+
+    .video-container {
+        padding-bottom: 75%; /* Adjust aspect ratio for mobile */
+    }
+
+    .video-gallery{
+        margin-top: -70px;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        width: 90%;
+        height: auto;
+    }
+
+    .video-bundle{
+        padding: 0px 0px 0px 0px;
+    }
+
+    .music-videos-section {
+        padding: 30px 0px 30px 0px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .section-description {
+        font-size: 0.95rem;
+    }
+
+    .video-container {
+        padding-bottom: 80%; /* Adjust aspect ratio for small screens */
+    }
+
+    .video-bundle{
+        padding: 0px 0px 0px 0px;
+    }
+}
+
+

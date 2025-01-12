@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prianka Zaman</title>
+    <link rel="stylesheet" href="Bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style/billboard-ad.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css"
+        integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="fontawesome-free-6.2.0-web/css/all.min.css">
+    <link rel="stylesheet" href="fontawesome-free-6.2.0-web/css/fontawesome.min.css">
+
+    <style>
+        /* TVC Section */
+        .tvc-ad-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            /* Centers content vertically */
+            margin: 30px 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ad-image {
+            flex: 1 1 40%;
+            text-align: center;
+        }
+
+        .ad-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .ad-content {
+            flex: 1 1 50%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ad-content h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .ad-content p {
+            line-height: 1.8;
+        }
+
+        .text-and-image {
+            display: flex;
+            flex-direction: column;
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: 40px;
+        }
+
+        .text-and-image img {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+
+        /* Video Section */
+        .youtube-section {
+            margin: 30px 20px;
+        }
+
+        .youtube-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .video-card iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        .video-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .youtube-section h2{
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .tvc-ad-section {
+                flex-direction: column;
+            }
+
+            .ad-content h2 {
+                text-align: center;
+            }
+
+            .ad-content p {
+                text-align: justify;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynavbar"
+                    aria-expanded="false" aria-controls="content">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand"><img class="logo-img" src="../images/Photos/logo.png" alt=""></a>
+            </div>
+            <div class="collapse navbar-collapse navbar-right" id="mynavbar">
+                <ul class="nav navbar-nav navbar-stacked">
+                    <li><a href="../index.html" class="btn"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="gallery.html" class="btn"><i class="fa-solid fa-images"></i> Photo
+                            Gallery</a></li>
+                    <li><a href="news.html" class="btn"><i class="fa-solid fa-newspaper"></i> News</a></li>
+                    <li><a href="dramas.html" class="btn"><i class="fa-solid fa-panorama"></i>
+                            Dramas</a></li>
+                    <li><a href="music-video.html" class="btn"><i class="fa-solid fa-icons"></i> Music Videos</a>
+                    </li>
+                    <li><a href="#" class="btn active"><i class="fa-solid fa-rectangle-ad"></i> Ads</a></li>
+                    <li><a href="social-media.html" class="btn"><i class="fa fa-user"></i> Social Media</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tvc-ad-section">
+        <div class="ad-image">
+            <img src="../images/Photos/ADS_001.jpg" alt="Ads">
+        </div>
+        <div class="ad-content section-header">
+            <h2>Advertisements</h2>
+            <div class="text-and-image">
+                <p>
+                    Since 2013, I've had the privilege of working with renowned brands like Maduli Jewelry, Famous TV,
+                    Pran RFL Glass, and Marquis Water Pump. Creating TVCs has always brought me joy, knowing they
+                    introduce valuable products and bring happiness to people. Explore my journey and watch my featured
+                    ads below.
+                </p>
+                <img src="../images/Photos/41255750699.png" alt="Additional Image">
+            </div>
+        </div>
+    </div>
+
+    <div class="youtube-section">
+        <h2>Watch My Ads</h2>
+        <div class="video-grid">
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/aYQWvw004D8" allowfullscreen></iframe>
+            </div>
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/Agpl9vlQa1A" allowfullscreen></iframe>
+            </div>
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/BWEBdnq55-8" allowfullscreen></iframe>
+            </div>
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/f64o1PhaWtI" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="Bootstrap/bootstrap-3.4.1-dist/js/jquery-3.6.1.min.js"></script>
+    <script scr="Bootstrap/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
