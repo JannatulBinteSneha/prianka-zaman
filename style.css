@@ -297,7 +297,20 @@ nav {
     .description h2 {
         font-size: 2rem;
     }
-
+.description p {
+        font-size: 1rem;
+    }
+    
+    .description h2::after {
+        content: "";
+        position: absolute;
+        width:40px;
+        height: 2px;
+        background-color: #ff6347;
+        bottom: 0;
+        left: 45%;
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
