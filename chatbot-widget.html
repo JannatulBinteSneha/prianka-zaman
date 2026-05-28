@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actress Website with AI Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fef5f5 0%, #fef9f8 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .page-content h1 {
+            font-size: 3em;
+            color: #d4697d;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .page-content p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Chatbot Widget Styles */
+        .chatbot-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4697d 0%, #e8a0b0 100%);
+            border: 3px solid #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(212, 105, 125, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .chatbot-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(212, 105, 125, 0.6);
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(212, 105, 125, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 25px rgba(212, 105, 125, 0.8);
+            }
+        }
+
+        /* Chat Popup Styles */
+        .chatbot-popup {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 450px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .chatbot-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #d4697d 0%, #e8a0b0 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .chatbot-header h2 {
+            font-size: 1.2em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #fafafa;
+        }
+
+        .message {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .user-message .message-bubble {
+            background: linear-gradient(135deg, #d4697d 0%, #e8a0b0 100%);
+            color: white;
+            border-radius: 18px 18px 4px 18px;
+        }
+
+        .bot-message {
+            justify-content: flex-start;
+        }
+
+        .bot-message .message-bubble {
+            background: #f0f0f0;
+            color: #333;
+            border-radius: 18px 18px 18px 4px;
+        }
+
+        .message-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            word-wrap: break-word;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 16px;
+            background: #f0f0f0;
+            border-radius: 18px 18px 18px 4px;
+            width: fit-content;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #999;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+        }
+
+        .chatbot-input-area {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 8px;
+            background: #fff;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            padding: 10px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+        }
+
+        .chatbot-input:focus {
+            outline: none;
+            border-color: #d4697d;
+            box-shadow: 0 0 0 3px rgba(212, 105, 125, 0.1);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #d4697d 0%, #e8a0b0 100%);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 10px rgba(212, 105, 125, 0.3);
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Scrollbar Styling */
+        .chatbot-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 3px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb:hover {
+            background: #bbb;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .chatbot-popup {
+                width: 90vw;
+                height: 70vh;
+                bottom: 80px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+
+            .page-content h1 {
+                font-size: 2em;
+            }
+
+            .page-content p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <h1>✨ Welcome to Our Website</h1>
+        <p>Try our AI Assistant in the bottom right corner! 💬</p>
+        <p>Ask anything about our actress or general questions. Our smart chatbot is here to help!</p>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-bubble" id="chatbotBubble">
+        <span>💬</span>
+    </div>
+
+    <div class="chatbot-popup" id="chatbotPopup">
+        <div class="chatbot-header">
+            <h2>
+                <div class="header-avatar">🤖</div>
+                Assistant
+            </h2>
+            <button class="close-btn" id="closeBtn">✕</button>
+        </div>
+
+        <div class="chatbot-messages" id="chatbotMessages">
+            <!-- Messages will be added here -->
+        </div>
+
+        <div class="chatbot-input-area">
+            <input 
+                type="text" 
+                class="chatbot-input" 
+                id="chatbotInput" 
+                placeholder="Type your message..."
+            >
+            <button class="send-btn" id="sendBtn">📤</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== CONFIGURATION =====
+        const GEMINI_API_KEY = 'AIzaSyAmYhaUT2e1zMvfXoY3KyFLpvnMctLFR0Q';
+        const GIST_URL = 'https://gist.githubusercontent.com/JannatulBinteSneha/567651735484338d8f74ee7c92661c43/raw';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+
+        // ===== STATE MANAGEMENT =====
+        let actressData = '';
+        let isWaitingForResponse = false;
+
+        // ===== DOM ELEMENTS =====
+        const chatbotBubble = document.getElementById('chatbotBubble');
+        const chatbotPopup = document.getElementById('chatbotPopup');
+        const closeBtn = document.getElementById('closeBtn');
+        const chatbotMessages = document.getElementById('chatbotMessages');
+        const chatbotInput = document.getElementById('chatbotInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // ===== EVENT LISTENERS =====
+        chatbotBubble.addEventListener('click', toggleChat);
+        closeBtn.addEventListener('click', closeChat);
+        sendBtn.addEventListener('click', sendMessage);
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !isWaitingForResponse) {
+                sendMessage();
+            }
+        });
+
+        // ===== FUNCTIONS =====
+        function toggleChat() {
+            chatbotPopup.classList.toggle('active');
+            if (chatbotPopup.classList.contains('active')) {
+                chatbotInput.focus();
+            }
+        }
+
+        function closeChat() {
+            chatbotPopup.classList.remove('active');
+        }
+
+        function openChat() {
+            chatbotPopup.classList.add('active');
+            chatbotInput.focus();
+        }
+
+        async function sendMessage() {
+            const userMessage = chatbotInput.value.trim();
+            
+            if (!userMessage) return;
+            if (isWaitingForResponse) return;
+
+            // Add user message to chat
+            addMessage(userMessage, 'user');
+            chatbotInput.value = '';
+
+            // Show typing indicator
+            isWaitingForResponse = true;
+            addTypingIndicator();
+
+            try {
+                const response = await queryGeminiAPI(userMessage);
+                removeTypingIndicator();
+                addMessage(response, 'bot');
+            } catch (error) {
+                removeTypingIndicator();
+                console.error('Error:', error);
+                addMessage('Sorry, I had trouble processing that. Please try again.', 'bot');
+            } finally {
+                isWaitingForResponse = false;
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.textContent = text;
+            
+            messageDiv.appendChild(bubble);
+            chatbotMessages.appendChild(messageDiv);
+
+            // Auto scroll to bottom
+            setTimeout(() => {
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }, 0);
+        }
+
+        function addTypingIndicator() {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot-message';
+            messageDiv.id = 'typing-indicator';
+            
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            
+            messageDiv.appendChild(indicator);
+            chatbotMessages.appendChild(messageDiv);
+
+            // Auto scroll to bottom
+            setTimeout(() => {
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }, 0);
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        async function queryGeminiAPI(userMessage) {
+            const systemPrompt = `You are a helpful general assistant on this website.
+
+You can help users with:
+- Any general questions they ask (weather, facts, advice, etc.)
+- Questions about the actress using this data:
+
+${actressData}
+
+Rules:
+- Be friendly, helpful and conversational
+- For actress related questions use only the provided dataset
+- For general questions answer naturally and helpfully
+- Keep answers short, clear and easy to read (2-3 sentences max)
+- Use emojis occasionally to keep it friendly`;
+
+            const requestBody = {
+                contents: [
+                    {
+                        role: 'user',
+                        parts: [
+                            {
+                                text: systemPrompt + '\n\nUser Question: ' + userMessage
+                            }
+                        ]
+                    }
+                ],
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 500,
+                }
+            };
+
+            try {
+                const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    return data.candidates[0].content.parts[0].text;
+                } else {
+                    return 'I could not generate a response. Please try again.';
+                }
+            } catch (error) {
+                console.error('Gemini API Error:', error);
+                throw error;
+            }
+        }
+
+        async function fetchActressData() {
+            try {
+                const response = await fetch(GIST_URL);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data: ${response.status}`);
+                }
+                actressData = await response.text();
+                console.log('Actress data loaded successfully');
+            } catch (error) {
+                console.error('Error fetching actress data:', error);
+                actressData = 'Unable to load actress data. You can still ask general questions!';
+            }
+        }
+
+        function initializeChat() {
+            // Add initial greeting message
+            setTimeout(() => {
+                addMessage('Hi! How can I help you today? 😊', 'bot');
+            }, 500);
+        }
+
+        // ===== INITIALIZATION =====
+        // Fetch actress data on page load
+        fetchActressData();
+
+        // Initialize chat when popup is opened for the first time
+        chatbotBubble.addEventListener('click', function initOnFirstClick() {
+            if (chatbotMessages.children.length === 0) {
+                initializeChat();
+            }
+            // Remove this listener after first click
+            chatbotBubble.removeEventListener('click', initOnFirstClick);
+            chatbotBubble.addEventListener('click', toggleChat);
+        });
+    </script>
+</body>
+</html>
