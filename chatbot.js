@@ -1,7 +1,5 @@
 // ===== CHATBOT CONFIGURATION =====
-const GEMINI_API_KEY = 'AIzaSyAOHxj54Cik0R0FB46VH9JaOZvFQdYftqg';
 const GIST_URL = 'https://gist.githubusercontent.com/JannatulBinteSneha/567651735484338d8f74ee7c92661c43/raw';
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent';
 
 // ===== STATE MANAGEMENT =====
 let actressData = '';
@@ -141,47 +139,16 @@ function removeTypingIndicator() {
 }
 
 async function queryGeminiAPI(userMessage) {
-    const systemPrompt = `You are a helpful general assistant on this website.
-
-You can help users with:
-- Any general questions they ask (weather, facts, advice, etc.)
-- Questions about the actress using this data:
-
-${actressData}
-
-Rules:
-- Be friendly, helpful and conversational
-- For actress related questions use only the provided dataset
-- For general questions answer naturally and helpfully
-- Keep answers short, clear and easy to read (2-3 sentences max)
-- Use emojis occasionally to keep it friendly`;
-
-    const requestBody = {
-        contents: [
-            {
-                role: 'user',
-                parts: [
-                    {
-                        text: systemPrompt + '\n\nUser Question: ' + userMessage
-                    }
-                ]
-            }
-        ],
-        generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 500,
-        }
-    };
-
     try {
-        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        const response = await fetch('/.netlify/functions/gemini', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify({
+                message: userMessage,
+                actressData: actressData
+            })
         });
 
         if (!response.ok) {
@@ -190,13 +157,13 @@ Rules:
 
         const data = await response.json();
         
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-            return data.candidates[0].content.parts[0].text;
+        if (data.reply) {
+            return data.reply;
         } else {
             return 'I could not generate a response. Please try again.';
         }
     } catch (error) {
-        console.error('Gemini API Error:', error);
+        console.error('Error:', error);
         throw error;
     }
 }
