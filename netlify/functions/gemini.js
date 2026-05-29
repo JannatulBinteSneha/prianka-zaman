@@ -41,7 +41,7 @@ exports.handler = async (event, context) => {
         };
     }
 
-    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent';
 
     // Build system prompt
     const systemPrompt = `You are a helpful general assistant on this website.
@@ -63,7 +63,6 @@ Rules:
     const requestBody = {
         contents: [
             {
-                role: 'user',
                 parts: [
                     {
                         text: systemPrompt + '\n\nUser Question: ' + message
@@ -81,10 +80,11 @@ Rules:
 
     try {
         // Call Gemini API
-        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(GEMINI_API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-goog-api-key': GEMINI_API_KEY
             },
             body: JSON.stringify(requestBody)
         });
