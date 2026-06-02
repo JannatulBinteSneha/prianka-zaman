@@ -157,7 +157,6 @@ p {
 .logo-img {
     height: 38px;
     width: auto;
-    margin-top: -8px;
     transition: transform var(--transition-speed) ease;
 }
 
@@ -172,7 +171,8 @@ p {
     font-weight: 700;
     color: var(--text-primary) !important;
     text-transform: uppercase;
-    padding-top: 20px;
+    padding: 16px 15px;
+    height: 70px;
 }
 
 /* Navbar Links */
@@ -227,6 +227,8 @@ p {
     border: none;
     background-color: transparent !important;
     margin-top: 18px;
+    margin-bottom: 18px;
+    outline: none;
 }
 
 .navbar-toggle:hover {
@@ -736,6 +738,14 @@ p {
    Responsive Media Queries
    ========================================== */
 @media (max-width: 992px) {
+    .navbar .nav > li > a {
+        padding: 10px 8px;
+        font-size: 12px;
+        margin: 0 2px;
+    }
+    .navbar-brand {
+        padding: 16px 10px;
+    }
     .hero-title {
         font-size: 3.5rem;
     }
@@ -763,7 +773,11 @@ p {
     .navbar-collapse {
         max-height: none !important; /* Prevent scrollbar inside mobile menu */
         border-top: 1px solid var(--navbar-border);
-        box-shadow: none;
+        border-bottom: 1px solid var(--navbar-border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        background-color: var(--navbar-bg) !important;
+        backdrop-filter: blur(var(--glass-blur));
+        -webkit-backdrop-filter: blur(var(--glass-blur));
     }
     .theme-toggle-container {
         padding: 12px 15px;
