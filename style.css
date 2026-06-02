@@ -359,75 +359,9 @@ p {
     animation: heroFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
 }
 
-.hero-cta {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: heroFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s;
-}
 
-.btn-premium {
-    background: var(--accent-gradient);
-    color: #ffffff !important;
-    border: none;
-    padding: 12px 35px;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    border-radius: 50px;
-    box-shadow: 0 10px 25px rgba(255, 99, 71, 0.3);
-    transition: all var(--transition-speed) ease;
-}
 
-.btn-premium:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(255, 99, 71, 0.5);
-}
 
-/* Floating Scroll Indicator */
-.scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: opacity var(--transition-speed) ease, color var(--transition-speed) ease;
-    z-index: 3;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-}
-
-.scroll-indicator:hover {
-    opacity: 1;
-    color: var(--accent-secondary);
-}
-
-.scroll-mouse {
-    width: 20px;
-    height: 32px;
-    border: 2px solid currentColor;
-    border-radius: 20px;
-    position: relative;
-    margin-top: 8px;
-}
-
-.scroll-wheel {
-    width: 4px;
-    height: 8px;
-    background-color: currentColor;
-    border-radius: 50%;
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: scrollMouseWheel 1.6s ease infinite;
-}
 
 /* ==========================================
    Description Section (Glassmorphic)
@@ -581,6 +515,7 @@ p {
     object-fit: contain;
     padding: 20px;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
 }
 
 .award-item:hover .award-image img {
@@ -740,16 +675,7 @@ p {
     }
 }
 
-@keyframes scrollMouseWheel {
-    0% {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, 12px);
-    }
-}
+
 
 /* Cinematic Ken Burns Effect */
 @keyframes kenBurns {
@@ -968,10 +894,7 @@ p {
         font-size: 0.95rem;
         letter-spacing: 2px;
     }
-    .btn-premium {
-        padding: 10px 25px;
-        font-size: 12px;
-    }
+
     .description-model {
         padding: 25px 15px;
     }
@@ -981,5 +904,73 @@ p {
         right: 20px;
         width: 40px;
         height: 40px;
+    }
+}
+
+/* Lightbox styles */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    max-width: 85vw;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease;
+}
+
+.lightbox.show .lightbox-img {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.lightbox .close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 40px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    user-select: none;
+    opacity: 1;
+    float: none;
+    text-shadow: none;
+}
+
+.lightbox .close:hover {
+    transform: scale(1.1) rotate(90deg);
+    color: var(--accent-color);
+}
+
+@media (max-width: 480px) {
+    .lightbox .close {
+        top: 20px;
+        right: 20px;
+        font-size: 32px;
     }
 }

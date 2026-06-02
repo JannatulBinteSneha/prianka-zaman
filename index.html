@@ -44,6 +44,7 @@
                         <li><a href="webpages/dramas.html"><i class="fa-solid fa-panorama"></i> Dramas</a></li>
                         <li><a href="webpages/music-video.html"><i class="fa-solid fa-icons"></i> Music Videos</a></li>
                         <li><a href="webpages/billboard-ad.html"><i class="fa-solid fa-rectangle-ad"></i> Ads</a></li>
+                        <li><a href="webpages/social-media.html"><i class="fa fa-user"></i> Social Media</a></li>
                     </ul>
                     <div class="theme-toggle-container">
                         <button class="theme-btn" id="themeButton" aria-label="Toggle Theme">
@@ -62,17 +63,10 @@
         </div>
         <div class="hero-overlay">
             <h1 class="hero-title">Prianka Zaman</h1>
-            <p class="hero-subtitle">Seasoned Actress & Model</p>
-            <div class="hero-cta">
-                <a href="#about" class="btn btn-premium">Discover More</a>
-            </div>
+            <p class="hero-subtitle">Actress & Model</p>
+
         </div>
-        <a href="#about" class="scroll-indicator">
-            <span>Scroll Down</span>
-            <div class="scroll-mouse">
-                <div class="scroll-wheel"></div>
-            </div>
-        </a>
+
     </div>
 
     <!-- Description / About Section -->
@@ -83,7 +77,7 @@
         <div class="description" data-aos="fade-left" data-aos-delay="200">
             <h2>About Me</h2>
             <p>
-                Prianka Zaman is a seasoned actress and model who has made a strong impact in the media industry. Her
+                Prianka Zaman is an actress and model who has made a strong impact in the media industry. Her
                 performances in dramas have earned her immense admiration. Alongside her acting career, Prianka has also
                 featured in popular music videos, where her charm and style have made her a fan favorite. Additionally,
                 she has become a prominent face in TV and billboard ads, demonstrating her versatility and wide appeal
@@ -156,14 +150,21 @@
         <div class="container">
             <span class="footer-logo">Prianka Zaman</span>
             <div class="footer-social-links">
-                <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://youtube.com" target="_blank" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://imdb.com" target="_blank" aria-label="IMDb"><i class="fa-brands fa-imdb"></i></a>
+                <a href="https://www.facebook.com/zamanprianka" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/prianka.zaman" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@priyankazaman1348" target="_blank" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.imdb.com/name/nm16434694/" target="_blank" aria-label="IMDb"><i class="fa-brands fa-imdb"></i></a>
             </div>
             <p class="footer-text">&copy; 2026 Prianka Zaman. All Rights Reserved.</p>
         </div>
     </footer>
+
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="close">&times;</span>
+        <img class="lightbox-img" src="" alt="Enlarged Photo">
+    </div>
 
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
@@ -178,6 +179,40 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
+
+    <!-- Lightbox Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.querySelector('.lightbox-img');
+            const closeLightbox = document.querySelector('.lightbox .close');
+            const awardRow = document.querySelector('.awards-row');
+
+            if (awardRow && lightbox && lightboxImg && closeLightbox) {
+                // Open lightbox on image click
+                awardRow.addEventListener('click', event => {
+                    if (event.target.tagName === 'IMG') {
+                        lightbox.classList.add('show');
+                        lightboxImg.src = event.target.src;
+                    }
+                });
+
+                // Close lightbox when clicking the close button
+                closeLightbox.addEventListener('click', () => {
+                    lightbox.classList.remove('show');
+                    setTimeout(() => { lightboxImg.src = ''; }, 300);
+                });
+
+                // Close lightbox when clicking outside the image
+                lightbox.addEventListener('click', event => {
+                    if (event.target === lightbox) {
+                        lightbox.classList.remove('show');
+                        setTimeout(() => { lightboxImg.src = ''; }, 300);
+                    }
+                });
+            }
+        });
+    </script>
 
     <!-- Chatbot Widget -->
     <div class="chatbot-bubble" id="chatbotBubble">
