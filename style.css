@@ -815,6 +815,13 @@ p {
     .awards-description {
         text-align: center;
     }
+    .awards-row {
+        gap: 20px;
+    }
+    .award-item {
+        flex: 0 1 100%;
+        max-width: 340px;
+    }
 }
 
 @media (max-width: 480px) {

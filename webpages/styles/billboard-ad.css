@@ -107,11 +107,12 @@
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
     flex: 0 1 calc(50% - 15px);
     width: 100%;
+    aspect-ratio: 16 / 9;
 }
 
 .video-card iframe {
     width: 100%;
-    height: 280px;
+    height: 100%;
     border: none;
     display: block;
 }
@@ -130,9 +131,7 @@
     .ad-image {
         padding-right: 25px;
     }
-    .video-card iframe {
-        height: 240px;
-    }
+
 }
 
 @media (max-width: 768px) {
@@ -172,7 +171,5 @@
     .text-and-image p {
         font-size: 15px;
     }
-    .video-card iframe {
-        height: 200px;
-    }
+
 }

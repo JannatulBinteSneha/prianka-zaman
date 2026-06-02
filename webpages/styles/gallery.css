@@ -1,7 +1,5 @@
-/* Gallery Container & Layout */
 .gallery-container {
-    display: flex;
-    justify-content: center;
+    display: block;
     padding: 40px 20px;
     box-sizing: border-box;
     width: 100%;

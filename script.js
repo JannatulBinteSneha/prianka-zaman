@@ -50,13 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeIcon(current);
   }
   
-  // 2. Mobile Hero Scrolling Image (Reset & restart animation instantly on mobile)
-  const imageContainer = document.querySelector('.image-container img');
-  if (imageContainer) {
-    imageContainer.style.animation = 'none'; // Reset animation
-    void imageContainer.offsetWidth; // Trigger reflow
-    imageContainer.style.animation = 'scrollImages 50s linear infinite'; // Restart animation
-  }
+
 
   // 3. AOS (Animate On Scroll) Initialization
   if (typeof AOS !== 'undefined') {
