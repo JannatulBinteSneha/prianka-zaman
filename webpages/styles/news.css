@@ -34,8 +34,9 @@ main.container {
 .card img {
     width: 100%;
     height: 420px; /* Fixed height */
-    object-fit: cover; /* Ensure image fills the area */
-    object-position: top; /* Start from the top */
+    object-fit: contain; /* Ensure full image is visible */
+    background-color: var(--bg-secondary);
+    object-position: center; /* Center the contained image */
     cursor: pointer;
     transition: filter 0.3s ease;
 }
