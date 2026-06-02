@@ -222,6 +222,24 @@ p {
     font-weight: 600;
 }
 
+/* Remove default outline/border/shadow on click/focus for navbar items & buttons */
+.navbar a:focus,
+.navbar a:active,
+.navbar-brand:focus,
+.navbar-brand:active,
+.navbar-brand img:focus,
+.navbar-brand img:active,
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:active,
+.navbar-toggle:focus,
+.navbar-toggle:active,
+.theme-btn:focus,
+.theme-btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
 /* Mobile Toggle menu button */
 .navbar-toggle {
     border: none;
