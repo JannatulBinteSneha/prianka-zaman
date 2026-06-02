@@ -99,7 +99,7 @@ exports.handler = async (event, context) => {
         };
     }
 
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
 
     // Build system instructions instruction containing the actress information
     const systemPrompt = `You are a helpful assistant on Prianka Zaman's personal portfolio website.
