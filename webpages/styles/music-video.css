@@ -1,26 +1,64 @@
-
-/* Section for Music Videos */
+/* Section for Music Videos and Dramas Page Header */
 .music-videos-section {
     width: 100%;
-    padding: 30px 0px 0px 0px;
-    background-color: #ffffff;
-    /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border-radius: 8px; */
-    margin: 20px auto;
-    max-width: 100%;
+    padding: 60px 0 0 0;
+    margin-top: 80px; /* Offset for sticky nav */
+    background-color: transparent;
 }
 
+.section-content {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
 
-/* Video container styles */
+.section-header h2 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+.section-description p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+/* Video Gallery Layout */
+.video-bundle {
+    padding: 0 40px 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.video-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fluid responsive iframe video layout */
 .video-container {
     position: relative;
-    padding-bottom: 56.25%; /* Aspect ratio for 16:9 */
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
     height: 0;
     overflow: hidden;
-    /* width: 600px; */
     background-color: #000;
-    border-radius: 8px;
-    /* height: 337.5px; */
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    flex: 0 1 calc(50% - 15px);
+    width: 100%;
+}
+
+.video-container:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
 }
 
 .video-container iframe {
@@ -30,52 +68,40 @@
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 8px;
-}
-
-.video-gallery{
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-    align-items: stretch;
-    width: 100%;
-    box-sizing: border-box;
-    margin: 0 auto;
-    margin-bottom: 20px;
-}
-.video-bundle{
-    padding: 0px 40px 0px 40px;
+    border-radius: 16px;
 }
 
 /* Responsiveness */
+@media (max-width: 992px) {
+    .video-gallery {
+        grid-gap: 20px;
+    }
+}
+
 @media (max-width: 768px) {
+    .music-videos-section {
+        margin-top: 70px;
+        padding-top: 40px;
+    }
+
+    .section-content {
+        margin-bottom: 25px;
+    }
+
     .section-header h2 {
         font-size: 2rem;
     }
 
-    .section-description {
-        font-size: 1rem;
+    .video-gallery {
+        padding: 0;
     }
 
     .video-container {
-        padding-bottom: 75%; /* Adjust aspect ratio for mobile */
+        flex: 0 1 100%;
     }
 
-    .video-gallery{
-        margin-top: -70px;
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        width: 90%;
-        height: auto;
-    }
-
-    .video-bundle{
-        padding: 0px 0px 0px 0px;
-    }
-
-    .music-videos-section {
-        padding: 30px 0px 30px 0px;
+    .video-bundle {
+        padding: 0 20px 40px 20px;
     }
 }
 
@@ -84,118 +110,10 @@
         font-size: 1.6rem;
     }
 
-    .section-description {
-        font-size: 0.95rem;
-    }
-
     .video-container {
-        padding-bottom: 80%; /* Adjust aspect ratio for small screens */
+        border-radius: 12px;
     }
-
-    .video-bundle{
-        padding: 0px 0px 0px 0px;
-    }
-}
-
-
-
-
-/* Section for Music Videos */
-.music-videos-section {
-    width: 100%;
-    padding: 30px 0px 0px 0px;
-    background-color: #ffffff;
-    /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border-radius: 8px; */
-    margin: 20px auto;
-    max-width: 100%;
-}
-
-
-/* Video container styles */
-.video-container {
-    position: relative;
-    padding-bottom: 56.25%; /* Aspect ratio for 16:9 */
-    height: 0;
-    overflow: hidden;
-    /* width: 600px; */
-    background-color: #000;
-    border-radius: 8px;
-    /* height: 337.5px; */
-}
-
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 8px;
-}
-
-.video-gallery{
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-    align-items: stretch;
-    width: 100%;
-    box-sizing: border-box;
-    margin: 0 auto;
-    margin-bottom: 20px;
-}
-.video-bundle{
-    padding: 0px 40px 0px 40px;
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-    .section-header h2 {
-        font-size: 2rem;
-    }
-
-    .section-description {
-        font-size: 1rem;
-    }
-
-    .video-container {
-        padding-bottom: 75%; /* Adjust aspect ratio for mobile */
-    }
-
-    .video-gallery{
-        margin-top: -70px;
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        width: 90%;
-        height: auto;
-    }
-
-    .video-bundle{
-        padding: 0px 0px 0px 0px;
-    }
-
-    .music-videos-section {
-        padding: 30px 0px 30px 0px;
+    .video-container iframe {
+        border-radius: 12px;
     }
 }
-
-@media (max-width: 480px) {
-    .section-header h2 {
-        font-size: 1.6rem;
-    }
-
-    .section-description {
-        font-size: 0.95rem;
-    }
-
-    .video-container {
-        padding-bottom: 80%; /* Adjust aspect ratio for small screens */
-    }
-
-    .video-bundle{
-        padding: 0px 0px 0px 0px;
-    }
-}
-
-

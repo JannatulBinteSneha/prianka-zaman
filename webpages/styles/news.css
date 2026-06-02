@@ -1,241 +1,128 @@
-/* General Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    color: #212529;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-}
-
-.card {
-    border: none;
-    margin-top: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.card img {
-    width: 100%;
-    height: auto;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+/* News Container Grid */
 main.container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
 .row {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 24px;
+    justify-content: center;
 }
 
+/* Card layout using variables */
 .card {
     flex: 0 1 calc(33.333% - 16px); /* 3 cards per row */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
     overflow: hidden;
-    background-color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--bg-card);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    margin-top: 10px;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--card-shadow-hover);
 }
 
 .card img {
     width: 100%;
-    height: 400px; /* Fixed height */
+    height: 420px; /* Fixed height */
     object-fit: cover; /* Ensure image fills the area */
     object-position: top; /* Start from the top */
     cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.card img:hover {
+    filter: brightness(95%);
 }
 
 /* Modal Styles */
 .modal {
-    display: none; /* Initially hidden */
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-}
-
-.modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .card {
-        flex: 0 1 calc(50% - 16px); /* 2 cards per row */
-    }
-}
-
-@media (max-width: 576px) {
-    .card {
-        flex: 0 1 calc(100% - 16px); /* 1 card per row */
-    }
-}
-
-/* General Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    color: #212529;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-}
-
-.card {
-    border: none;
-    margin-top: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.card img {
-    width: 100%;
-    height: auto;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-main.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.row {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-
-.card {
-    flex: 0 1 calc(33.333% - 16px); /* 3 cards per row */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.card img {
-    width: 100%;
-    height: 400px; /* Fixed height */
-    object-fit: cover; /* Ensure image fills the area */
-    object-position: top; /* Start from the top */
-    cursor: pointer;
-}
-
-/* Modal Styles */
-.modal {
-    display: none; /* Initially hidden */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 .modal img {
     max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    max-height: 85%;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal.show img {
+    transform: scale(1);
 }
 
 .modal-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 30px;
+    right: 40px;
     color: #fff;
-    font-size: 24px;
+    font-size: 36px;
     cursor: pointer;
     background: transparent;
     border: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.modal-close:hover {
+    transform: scale(1.1) rotate(90deg);
+    color: var(--accent-color);
+}
+
+/* Section header offset */
+.news-header-container {
+    margin-top: 100px;
+    text-align: center;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .card {
-        flex: 0 1 calc(50% - 16px); /* 2 cards per row */
+        flex: 0 1 calc(50% - 12px); /* 2 cards per row */
+    }
+    .card img {
+        height: 380px;
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 600px) {
     .card {
-        flex: 0 1 calc(100% - 16px); /* 1 card per row */
+        flex: 0 1 100%; /* 1 card per row */
+        border-radius: 12px;
+    }
+    .card img {
+        height: 320px;
+    }
+    .modal-close {
+        top: 20px;
+        right: 20px;
+        font-size: 28px;
     }
 }

@@ -1,0 +1,132 @@
+/* Container spacing offset */
+.social-media-container {
+    margin-top: 100px;
+    padding: 60px 20px 100px 20px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Glassmorphism Card for Profiles wrapper */
+.social-well {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    box-shadow: var(--card-shadow);
+    padding: 50px 30px;
+    text-align: center;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.social-well:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.social-well h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.social-well hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 25px 0;
+}
+
+/* Grid of profile cards */
+.profile-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* Glass profile buttons */
+.profile-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 25px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none !important;
+    box-shadow: var(--shadow-sm);
+    flex: 0 1 calc(50% - 10px);
+    width: 100%;
+}
+
+.profile-card i {
+    font-size: 28px;
+    margin-right: 15px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-card span {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Colored Hover glows and styles */
+.profile-card.facebook-card {
+    color: #1877F2;
+}
+.profile-card.facebook-card:hover {
+    background: #1877F2;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(24, 119, 242, 0.4);
+    border-color: transparent;
+}
+
+.profile-card.instagram-card {
+    color: #E1306C;
+}
+.profile-card.instagram-card:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(225, 48, 108, 0.4);
+    border-color: transparent;
+}
+
+.profile-card.imdb-card {
+    color: #F5C518;
+}
+.profile-card.imdb-card:hover {
+    background: #F5C518;
+    color: #000000;
+    box-shadow: 0 10px 25px rgba(245, 197, 24, 0.4);
+    border-color: transparent;
+}
+
+.profile-card.youtube-card {
+    color: #FF0000;
+}
+.profile-card.youtube-card:hover {
+    background: #FF0000;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(255, 0, 0, 0.4);
+    border-color: transparent;
+}
+
+.profile-card:hover i {
+    transform: scale(1.15) rotate(-8deg);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .profile-grid {
+        gap: 15px;
+    }
+    .profile-card {
+        flex: 0 1 100%;
+    }
+    .social-well {
+        padding: 35px 20px;
+    }
+}

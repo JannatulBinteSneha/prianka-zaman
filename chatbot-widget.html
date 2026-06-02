@@ -7,6 +7,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent-color: #d4697d;
+            --accent-gradient: linear-gradient(135deg, #d4697d 0%, #f09cb0 100%);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --glass-blur: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,34 +30,36 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fef5f5 0%, #fef9f8 100%);
+            background: linear-gradient(135deg, #fdf6f5 0%, #fcfbfb 100%);
             min-height: 100vh;
             padding: 20px;
-            color: #333;
+            color: var(--text-primary);
         }
 
         .page-content {
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
-            padding: 40px 20px;
+            padding: 80px 20px;
         }
 
         .page-content h1 {
             font-size: 3em;
-            color: #d4697d;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
             font-weight: 700;
         }
 
         .page-content p {
             font-size: 1.2em;
-            color: #666;
+            color: var(--text-secondary);
             margin-bottom: 30px;
             line-height: 1.6;
         }
 
-        /* Chatbot Widget Styles */
+        /* Chatbot Floating Bubble Button */
         .chatbot-bubble {
             position: fixed;
             bottom: 30px;
@@ -50,50 +67,66 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #d4697d 0%, #e8a0b0 100%);
-            border: 3px solid #fff;
+            background: var(--accent-gradient);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 4px 15px rgba(212, 105, 125, 0.4);
-            transition: all 0.3s ease;
+            font-size: 26px;
+            box-shadow: 0 10px 25px rgba(212, 105, 125, 0.35);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
             z-index: 999;
-            animation: glow 2s ease-in-out infinite;
+            animation: floatingGlow 2.5s ease-in-out infinite;
         }
 
         .chatbot-bubble:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(212, 105, 125, 0.6);
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 15px 30px rgba(212, 105, 125, 0.5);
         }
 
-        @keyframes glow {
+        .chatbot-bubble span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-bubble:hover span {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        @keyframes floatingGlow {
             0%, 100% {
-                box-shadow: 0 4px 15px rgba(212, 105, 125, 0.4);
+                transform: translateY(0);
+                box-shadow: 0 10px 25px rgba(212, 105, 125, 0.35);
             }
             50% {
-                box-shadow: 0 4px 25px rgba(212, 105, 125, 0.8);
+                transform: translateY(-6px);
+                box-shadow: 0 15px 35px rgba(212, 105, 125, 0.65);
             }
         }
 
-        /* Chat Popup Styles */
+        /* Chat Popup Window (Glassmorphism) */
         .chatbot-popup {
             position: fixed;
-            bottom: 100px;
+            bottom: 105px;
             right: 30px;
-            width: 350px;
-            height: 450px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.15);
+            width: 380px;
+            height: 520px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
             display: flex;
             flex-direction: column;
             z-index: 998;
             opacity: 0;
             visibility: hidden;
             transform: translateY(20px) scale(0.95);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
 
@@ -101,75 +134,84 @@
             opacity: 1;
             visibility: visible;
             transform: translateY(0) scale(1);
+            box-shadow: var(--card-shadow-hover);
         }
 
+        /* Chat Header */
         .chatbot-header {
-            background: linear-gradient(135deg, #d4697d 0%, #e8a0b0 100%);
+            background: var(--accent-gradient);
             color: white;
-            padding: 20px;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 15px 15px 0 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .chatbot-header h2 {
-            font-size: 1.2em;
+            font-size: 1.25rem;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 10px;
+            margin: 0;
+            color: white;
         }
 
         .header-avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .close-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border: none;
             color: white;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
+            outline: none;
         }
 
         .close-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
         }
 
+        /* Messages Area */
         .chatbot-messages {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            background: #fafafa;
+            gap: 14px;
+            background: rgba(0, 0, 0, 0.02);
         }
 
+        /* Base Message Styling */
         .message {
             display: flex;
-            animation: slideIn 0.3s ease;
+            animation: messageSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes slideIn {
+        @keyframes messageSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(12px);
             }
             to {
                 opacity: 1;
@@ -182,9 +224,10 @@
         }
 
         .user-message .message-bubble {
-            background: linear-gradient(135deg, #d4697d 0%, #e8a0b0 100%);
+            background: var(--accent-gradient);
             color: white;
             border-radius: 18px 18px 4px 18px;
+            box-shadow: 0 4px 15px rgba(212, 105, 125, 0.15);
         }
 
         .bot-message {
@@ -192,9 +235,11 @@
         }
 
         .bot-message .message-bubble {
-            background: #f0f0f0;
-            color: #333;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
             border-radius: 18px 18px 18px 4px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
         }
 
         .message-bubble {
@@ -202,25 +247,29 @@
             padding: 12px 16px;
             word-wrap: break-word;
             line-height: 1.5;
-            font-size: 0.95em;
+            font-size: 16px;
         }
 
+        /* Typing animation */
         .typing-indicator {
             display: flex;
             align-items: center;
-            gap: 4px;
-            padding: 12px 16px;
-            background: #f0f0f0;
+            gap: 5px;
+            padding: 12px 18px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-radius: 18px 18px 18px 4px;
             width: fit-content;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
         }
 
         .typing-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: #999;
-            animation: typing 1.4s infinite;
+            background: var(--text-muted);
+            opacity: 0.4;
+            animation: typingPulse 1.4s infinite;
         }
 
         .typing-dot:nth-child(2) {
@@ -231,68 +280,77 @@
             animation-delay: 0.4s;
         }
 
-        @keyframes typing {
+        @keyframes typingPulse {
             0%, 60%, 100% {
-                opacity: 0.3;
+                opacity: 0.4;
                 transform: translateY(0);
             }
             30% {
                 opacity: 1;
-                transform: translateY(-10px);
+                transform: translateY(-6px);
             }
         }
 
+        /* Input Area styling */
         .chatbot-input-area {
-            padding: 15px;
-            border-top: 1px solid #eee;
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
             display: flex;
-            gap: 8px;
-            background: #fff;
+            gap: 10px;
+            background: var(--bg-primary);
         }
 
         .chatbot-input {
             flex: 1;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             border-radius: 25px;
-            padding: 10px 16px;
+            padding: 11px 18px;
+            font-size: 15px;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.95em;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         .chatbot-input:focus {
             outline: none;
             border-color: #d4697d;
-            box-shadow: 0 0 0 3px rgba(212, 105, 125, 0.1);
+            background: var(--bg-primary);
+            box-shadow: 0 0 0 3px rgba(212, 105, 125, 0.15);
+        }
+
+        .chatbot-input::placeholder {
+            color: var(--text-muted);
         }
 
         .send-btn {
-            background: linear-gradient(135deg, #d4697d 0%, #e8a0b0 100%);
+            background: var(--accent-gradient);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            transition: all 0.2s ease;
+            font-size: 16px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 10px rgba(212, 105, 125, 0.2);
         }
 
         .send-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 2px 10px rgba(212, 105, 125, 0.3);
+            transform: scale(1.08);
+            box-shadow: 0 6px 15px rgba(212, 105, 125, 0.35);
         }
 
         .send-btn:active {
             transform: scale(0.95);
         }
 
-        /* Scrollbar Styling */
+        /* Webkit Scrollbars for Message Area */
         .chatbot-messages::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
 
         .chatbot-messages::-webkit-scrollbar-track {
@@ -300,40 +358,39 @@
         }
 
         .chatbot-messages::-webkit-scrollbar-thumb {
-            background: #ddd;
+            background: var(--border-color);
             border-radius: 3px;
         }
 
         .chatbot-messages::-webkit-scrollbar-thumb:hover {
-            background: #bbb;
+            background: var(--text-muted);
         }
 
-        /* Mobile Responsive */
+        /* Mobile Responsiveness */
         @media (max-width: 480px) {
             .chatbot-popup {
-                width: 90vw;
-                height: 70vh;
-                bottom: 80px;
-                right: 10px;
-                left: 10px;
-                max-width: none;
+                width: calc(100% - 30px);
+                height: 60vh;
+                bottom: 90px;
+                right: 15px;
+                left: 15px;
+                border-radius: 20px;
             }
 
-            .page-content h1 {
-                font-size: 2em;
-            }
-
-            .page-content p {
-                font-size: 1em;
+            .chatbot-bubble {
+                bottom: 20px;
+                right: 20px;
+                width: 54px;
+                height: 54px;
             }
         }
     </style>
 </head>
 <body>
     <div class="page-content">
-        <h1>✨ Welcome to Our Website</h1>
-        <p>Try our AI Assistant in the bottom right corner! 💬</p>
-        <p>Ask anything about our actress or general questions. Our smart chatbot is here to help!</p>
+        <h1>✨ AI Assistant Demo Dashboard</h1>
+        <p>Try our upgraded AI Assistant in the bottom right corner! 💬</p>
+        <p>Ask anything about the actress or general questions. This mockup renders the premium design and maintains conversation context!</p>
     </div>
 
     <!-- Chatbot Widget -->
@@ -374,6 +431,7 @@
         // ===== STATE MANAGEMENT =====
         let actressData = '';
         let isWaitingForResponse = false;
+        let conversationHistory = []; // Stores the session history: { role: 'user' | 'model', text: string }
 
         // ===== DOM ELEMENTS =====
         const chatbotBubble = document.getElementById('chatbotBubble');
@@ -405,20 +463,21 @@
             chatbotPopup.classList.remove('active');
         }
 
-        function openChat() {
-            chatbotPopup.classList.add('active');
-            chatbotInput.focus();
-        }
-
         async function sendMessage() {
             const userMessage = chatbotInput.value.trim();
             
             if (!userMessage) return;
             if (isWaitingForResponse) return;
 
-            // Add user message to chat
+            // Add user message to UI
             addMessage(userMessage, 'user');
             chatbotInput.value = '';
+
+            // Update conversation history
+            conversationHistory.push({ role: 'user', text: userMessage });
+            if (conversationHistory.length > 10) {
+                conversationHistory = conversationHistory.slice(-10);
+            }
 
             // Show typing indicator
             isWaitingForResponse = true;
@@ -428,9 +487,21 @@
                 const response = await queryGeminiAPI(userMessage);
                 removeTypingIndicator();
                 addMessage(response, 'bot');
+
+                // Update conversation history
+                conversationHistory.push({ role: 'model', text: response });
+                if (conversationHistory.length > 10) {
+                    conversationHistory = conversationHistory.slice(-10);
+                }
             } catch (error) {
                 removeTypingIndicator();
                 console.error('Error:', error);
+                
+                // Remove failed user prompt from context
+                if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].text === userMessage) {
+                    conversationHistory.pop();
+                }
+                
                 addMessage('Sorry, I had trouble processing that. Please try again.', 'bot');
             } finally {
                 isWaitingForResponse = false;
@@ -480,37 +551,51 @@
         }
 
         async function queryGeminiAPI(userMessage) {
-            const systemPrompt = `You are a helpful general assistant on this website.
+            const systemPrompt = `You are a helpful assistant on Prianka Zaman's personal portfolio website.
 
-You can help users with:
-- Any general questions they ask (weather, facts, advice, etc.)
-- Questions about the actress using this data:
+Your task is to answer user questions:
+- Provide information about Prianka Zaman using the provided actressData.
+- Answer general questions helpfully and politely.
 
-${actressData}
+Information about Prianka Zaman:
+${actressData || 'No actress data loaded currently.'}
 
 Rules:
-- Be friendly, helpful and conversational
-- For actress related questions use only the provided dataset
-- For general questions answer naturally and helpfully
-- Keep answers short, clear and easy to read (2-3 sentences max)
-- Use emojis occasionally to keep it friendly`;
+1. Be polite, engaging, and professional.
+2. For questions about Prianka Zaman, rely ONLY on the information provided in the "Information about Prianka Zaman" section above. If the answer is not in the data, politely say that you don't have that information but can help with general questions.
+3. For general questions (outside of Prianka Zaman), answer them naturally and accurately.
+4. Keep all responses concise (maximum 3 sentences).
+5. Use relevant emojis occasionally to make the chat friendly.`;
+
+            // Map history to Gemini API format
+            const contents = conversationHistory.map(item => ({
+                role: item.role === 'model' ? 'model' : 'user',
+                parts: [{ text: item.text }]
+            }));
+
+            // Make sure the last item in contents is our latest message
+            const lastItem = contents[contents.length - 1];
+            if (!lastItem || lastItem.parts[0].text !== userMessage || lastItem.role !== 'user') {
+                contents.push({
+                    role: 'user',
+                    parts: [{ text: userMessage }]
+                });
+            }
 
             const requestBody = {
-                contents: [
-                    {
-                        role: 'user',
-                        parts: [
-                            {
-                                text: systemPrompt + '\n\nUser Question: ' + userMessage
-                            }
-                        ]
-                    }
-                ],
+                systemInstruction: {
+                    parts: [
+                        {
+                            text: systemPrompt
+                        }
+                    ]
+                },
+                contents: contents,
                 generationConfig: {
                     temperature: 0.7,
                     topK: 40,
                     topP: 0.95,
-                    maxOutputTokens: 500,
+                    maxOutputTokens: 350,
                 }
             };
 
@@ -550,7 +635,7 @@ Rules:
                 console.log('Actress data loaded successfully');
             } catch (error) {
                 console.error('Error fetching actress data:', error);
-                actressData = 'Unable to load actress data. You can still ask general questions!';
+                actressData = ''; // Fallback to empty, API handles gracefully
             }
         }
 
@@ -562,7 +647,6 @@ Rules:
         }
 
         // ===== INITIALIZATION =====
-        // Fetch actress data on page load
         fetchActressData();
 
         // Initialize chat when popup is opened for the first time
@@ -570,7 +654,6 @@ Rules:
             if (chatbotMessages.children.length === 0) {
                 initializeChat();
             }
-            // Remove this listener after first click
             chatbotBubble.removeEventListener('click', initOnFirstClick);
             chatbotBubble.addEventListener('click', toggleChat);
         });

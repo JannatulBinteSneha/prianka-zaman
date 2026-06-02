@@ -5,6 +5,7 @@ const GIST_URL = 'https://gist.githubusercontent.com/JannatulBinteSneha/56765173
 let actressData = '';
 let isWaitingForResponse = false;
 let chatInitialized = false;
+let conversationHistory = []; // Stores the session history: { role: 'user' | 'model', text: string }
 
 // ===== DOM ELEMENTS =====
 let chatbotBubble;
@@ -53,10 +54,12 @@ function toggleChat() {
     }
 }
 
+// Close Chat popup
 function closeChat() {
     chatbotPopup.classList.remove('active');
 }
 
+// Open Chat popup
 function openChat() {
     chatbotPopup.classList.add('active');
     
@@ -69,33 +72,53 @@ function openChat() {
     chatbotInput.focus();
 }
 
+// Handles user message sending
 async function sendMessage() {
     const userMessage = chatbotInput.value.trim();
     
     if (!userMessage) return;
     if (isWaitingForResponse) return;
 
-    // Add user message to chat
+    // Display user message in UI
     addMessage(userMessage, 'user');
     chatbotInput.value = '';
+
+    // Append to local history and slice to keep lightweight
+    conversationHistory.push({ role: 'user', text: userMessage });
+    if (conversationHistory.length > 10) {
+        conversationHistory = conversationHistory.slice(-10);
+    }
 
     // Show typing indicator
     isWaitingForResponse = true;
     addTypingIndicator();
 
     try {
-        const response = await queryGeminiAPI(userMessage);
+        const responseText = await queryGeminiAPI(userMessage);
         removeTypingIndicator();
-        addMessage(response, 'bot');
+        addMessage(responseText, 'bot');
+
+        // Append bot response to local history
+        conversationHistory.push({ role: 'model', text: responseText });
+        if (conversationHistory.length > 10) {
+            conversationHistory = conversationHistory.slice(-10);
+        }
     } catch (error) {
         removeTypingIndicator();
-        console.error('Error:', error);
+        console.error('Error during chatbot response generation:', error);
+        
+        // Remove the failed user prompt from conversation history so it doesn't pollute the context
+        if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].text === userMessage) {
+            conversationHistory.pop();
+        }
+        
         addMessage('Sorry, I had trouble processing that. Please try again.', 'bot');
     } finally {
         isWaitingForResponse = false;
     }
 }
 
+// Helper to add a message bubble to UI
 function addMessage(text, sender) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${sender}-message`;
@@ -113,6 +136,7 @@ function addMessage(text, sender) {
     }, 0);
 }
 
+// Helper to add bot typing animation
 function addTypingIndicator() {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message bot-message';
@@ -131,6 +155,7 @@ function addTypingIndicator() {
     }, 0);
 }
 
+// Helper to remove bot typing animation
 function removeTypingIndicator() {
     const typingIndicator = document.getElementById('typing-indicator');
     if (typingIndicator) {
@@ -138,6 +163,7 @@ function removeTypingIndicator() {
     }
 }
 
+// Sends user message and history to serverless backend
 async function queryGeminiAPI(userMessage) {
     try {
         const response = await fetch('/.netlify/functions/gemini', {
@@ -147,7 +173,8 @@ async function queryGeminiAPI(userMessage) {
             },
             body: JSON.stringify({
                 message: userMessage,
-                actressData: actressData
+                actressData: actressData,
+                history: conversationHistory
             })
         });
 
@@ -163,11 +190,12 @@ async function queryGeminiAPI(userMessage) {
             return 'I could not generate a response. Please try again.';
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error in queryGeminiAPI:', error);
         throw error;
     }
 }
 
+// Fetches biography and info dataset about Prianka Zaman
 async function fetchActressData() {
     try {
         const response = await fetch(GIST_URL);
@@ -178,12 +206,12 @@ async function fetchActressData() {
         console.log('Actress data loaded successfully');
     } catch (error) {
         console.error('Error fetching actress data:', error);
-        actressData = 'Unable to load actress data. You can still ask general questions!';
+        actressData = ''; // Fallback to empty, backend handles this gracefully
     }
 }
 
+// Injects the greeting message on first startup
 function initializeChat() {
-    // Add initial greeting message
     addMessage('Hi! How can I help you today? 😊', 'bot');
 }
 
