@@ -62,20 +62,20 @@ function closeChat() {
 // Open Chat popup
 function openChat() {
     chatbotPopup.classList.add('active');
-    
+
     // Initialize greeting message on first open
     if (!chatInitialized && chatbotMessages.children.length === 0) {
         initializeChat();
         chatInitialized = true;
     }
-    
+
     chatbotInput.focus();
 }
 
 // Handles user message sending
 async function sendMessage() {
     const userMessage = chatbotInput.value.trim();
-    
+
     if (!userMessage) return;
     if (isWaitingForResponse) return;
 
@@ -106,12 +106,12 @@ async function sendMessage() {
     } catch (error) {
         removeTypingIndicator();
         console.error('Error during chatbot response generation:', error);
-        
+
         // Remove the failed user prompt from conversation history so it doesn't pollute the context
         if (conversationHistory.length > 0 && conversationHistory[conversationHistory.length - 1].text === userMessage) {
             conversationHistory.pop();
         }
-        
+
         addMessage('Sorry, I had trouble processing that. Please try again.', 'bot');
     } finally {
         isWaitingForResponse = false;
@@ -122,11 +122,11 @@ async function sendMessage() {
 function addMessage(text, sender) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${sender}-message`;
-    
+
     const bubble = document.createElement('div');
     bubble.className = 'message-bubble';
     bubble.textContent = text;
-    
+
     messageDiv.appendChild(bubble);
     chatbotMessages.appendChild(messageDiv);
 
@@ -141,11 +141,11 @@ function addTypingIndicator() {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message bot-message';
     messageDiv.id = 'typing-indicator';
-    
+
     const indicator = document.createElement('div');
     indicator.className = 'typing-indicator';
     indicator.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-    
+
     messageDiv.appendChild(indicator);
     chatbotMessages.appendChild(messageDiv);
 
@@ -166,7 +166,7 @@ function removeTypingIndicator() {
 // Sends user message and history to serverless backend
 async function queryGeminiAPI(userMessage) {
     try {
-        const response = await fetch('/.netlify/functions/gemini', {
+        const response = await fetch('https://gemini-proxy.jannatulbintesneha-p.workers.dev', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ async function queryGeminiAPI(userMessage) {
         }
 
         const data = await response.json();
-        
+
         if (data.reply) {
             return data.reply;
         } else {
